@@ -28,12 +28,19 @@ class HomePage extends StatelessWidget {
 
   Widget _swiperCards(BuildContext context) {
     final _screenSize = MediaQuery.of(context).size;
+    final orientation =
+        MediaQuery.of(context).orientation == Orientation.portrait
+            ? 'portrait'
+            : 'landscape';
+
+    double height = (orientation == 'portrait') ? 0.55 : 0.45;
 
     return FutureBuilder(
       future: peliculasProvider.getEnCines(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-          height: _screenSize.width * 0.85,
+          // height: _screenSize.width * 0.85,
+          height: _screenSize.height * height,
           child: Center(
             child: (snapshot.hasData)
                 ? CardSwiper(peliculas: snapshot.data)
@@ -67,10 +74,6 @@ class HomePage extends StatelessWidget {
             FutureBuilder(
                 future: peliculasProvider.getPopular(),
                 builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-                  snapshot.data?.forEach((e) {
-                    print(e.title);
-                  });
-
                   return (snapshot.hasData)
                       ? MovieHorizontal(peliculas: snapshot.data)
                       : Center(child: CircularProgressIndicator());

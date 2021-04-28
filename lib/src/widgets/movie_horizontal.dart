@@ -24,6 +24,11 @@ class MovieHorizontal extends StatelessWidget {
   }
 
   List<Widget> _cards(BuildContext context) {
+    final _screenSize = MediaQuery.of(context).size;
+
+    print('height: ' + _screenSize.height.toString());
+    print('width: ' + _screenSize.width.toString());
+
     return peliculas.map((e) {
       return Container(
         margin: EdgeInsets.only(right: 15.0),
@@ -35,16 +40,19 @@ class MovieHorizontal extends StatelessWidget {
                 placeholder: AssetImage('assets/img/no-image.jpg'),
                 image: NetworkImage(e.getPosterImg()),
                 fit: BoxFit.cover,
-                height: MediaQuery.of(context).size.height * 0.21,
+                height: _screenSize.height * 0.21,
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.01,
+              height: _screenSize.height * 0.01,
             ),
-            Text(
-              e.title,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.caption,
+            Container(
+              height: _screenSize.height * 0.03,
+              child: Text(
+                e.title,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.caption,
+              ),
             )
           ],
         ),
