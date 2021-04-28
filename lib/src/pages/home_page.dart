@@ -3,6 +3,8 @@ import 'package:flutter_curso_peliculas/src/providers/peliculas.dart';
 import 'package:flutter_curso_peliculas/src/widgets/card_swiper.dart';
 
 class HomePage extends StatelessWidget {
+  final peliculasProvider = PeliculasProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,16 +16,45 @@ class HomePage extends StatelessWidget {
       ),
       body: Container(
         child: Column(
-          children: [_swiperCards()],
+          children: [
+            _swiperCards(),
+            _footer(context),
+          ],
         ),
       ),
     );
   }
 
   Widget _swiperCards() {
-    final peliculasProvider = PeliculasProvider();
-    peliculasProvider.getEnCines();
+    return FutureBuilder(
+      future: peliculasProvider.getEnCines(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return CardSwiper(peliculas: snapshot.data);
+        } else {
+          return Container(
+            height: 400.0,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+  }
 
-    return CardSwiper(peliculas: [1, 2, 3, 4, 5]);
+  Widget _footer(BuildContext context) {
+    return Container(
+        width: double.infinity,
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Populares',
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1, // subtitle1 - headline6
+            )
+          ],
+        ));
   }
 }

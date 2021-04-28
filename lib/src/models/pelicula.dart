@@ -1,7 +1,7 @@
 class Peliculas {
   // List<Pelicula> items = [];
 
-  List<Pelicula> items = new List();
+  List<Pelicula> items = [];
 
   Peliculas();
 
@@ -63,5 +63,13 @@ class Pelicula {
     video = json['video'];
     voteAverage = json['vote_average'] / 1;
     voteCount = json['vote_count'];
+  }
+
+  getPosterImg() {
+    if (posterPath == null) {
+      return 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
   }
 }
