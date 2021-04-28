@@ -8,15 +8,10 @@ class PeliculasProvider {
   String _url = 'api.themoviedb.org';
   String _language = 'es-ES';
 
-  Future<List<Pelicula>> getEnCines() async {
-    final url = Uri.https(_url, '3/movie/now_playing', {
-      'api_key': _apiKey,
-      'language': _language,
-    });
-
+  Future<List<Pelicula>> _procesarUri(Uri uri) async {
     var response = [];
     try {
-      final resp = await http.get(url);
+      final resp = await http.get(uri);
       if (resp.statusCode == 200) {
         final jsonResponse = convert.jsonDecode(resp.body);
         final peliculas = Peliculas.fromJsonList(jsonResponse['results']);
@@ -32,27 +27,21 @@ class PeliculasProvider {
     return response;
   }
 
-  Future<List<Pelicula>> getPopular() async {
-    final url = Uri.https(_url, '3/movie/popular', {
+  Future<List<Pelicula>> getEnCines() async {
+    final uri = Uri.https(_url, '3/movie/now_playing', {
       'api_key': _apiKey,
       'language': _language,
     });
 
-    var response = [];
-    try {
-      final resp = await http.get(url);
-      if (resp.statusCode == 200) {
-        final jsonResponse = convert.jsonDecode(resp.body);
-        final peliculas = Peliculas.fromJsonList(jsonResponse['results']);
+    return await _procesarUri(uri);
+  }
 
-        response = peliculas.items;
-      } else {
-        print('Request failed with status: ${resp.statusCode}.');
-      }
-    } catch (err) {
-      print(err);
-    }
+  Future<List<Pelicula>> getPopular() async {
+    final uri = Uri.https(_url, '3/movie/popular', {
+      'api_key': _apiKey,
+      'language': _language,
+    });
 
-    return response;
+    return await _procesarUri(uri);
   }
 }
