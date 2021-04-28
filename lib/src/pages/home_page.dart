@@ -8,6 +8,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    peliculasProvider.getPopular();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -28,12 +30,19 @@ class HomePage extends StatelessWidget {
 
   Widget _swiperCards(BuildContext context) {
     final _screenSize = MediaQuery.of(context).size;
+    final orientation =
+        MediaQuery.of(context).orientation == Orientation.portrait
+            ? 'portrait'
+            : 'landscape';
+
+    double height = (orientation == 'portrait') ? 0.55 : 0.45;
 
     return FutureBuilder(
       future: peliculasProvider.getEnCines(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-          height: _screenSize.width * 0.85,
+          // height: _screenSize.width * 0.85,
+          height: _screenSize.height * height,
           child: Center(
             child: (snapshot.hasData)
                 ? CardSwiper(peliculas: snapshot.data)
@@ -64,17 +73,17 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: _screenSize.height * 0.025,
             ),
-            FutureBuilder(
-                future: peliculasProvider.getPopular(),
-                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-                  snapshot.data?.forEach((e) {
-                    print(e.title);
-                  });
-
-                  return (snapshot.hasData)
-                      ? MovieHorizontal(peliculas: snapshot.data)
-                      : Center(child: CircularProgressIndicator());
-                })
+            StreamBuilder(
+              stream: peliculasProvider.popularesStream,
+              builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                return (snapshot.hasData)
+                    ? MovieHorizontal(
+                        peliculas: snapshot.data,
+                        siguientePagina: peliculasProvider.getPopular,
+                      )
+                    : Center(child: CircularProgressIndicator());
+              },
+            ),
           ],
         ));
   }

@@ -10,13 +10,22 @@ class CardSwiper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _screenSize = MediaQuery.of(context).size;
+    final orientation =
+        MediaQuery.of(context).orientation == Orientation.portrait
+            ? 'portrait'
+            : 'landscape';
+
+    double width = (orientation == 'portrait') ? 0.5 : 0.18;
+
+    // MediaQuery.of(context).orientation
 
     return Container(
       padding: EdgeInsets.only(top: 10.0),
       child: new Swiper(
         layout: SwiperLayout.STACK,
-        itemWidth: _screenSize.width * 0.7,
-        itemHeight: _screenSize.height * 0.5,
+        // itemWidth: _screenSize.width * 0.7,
+        itemWidth: _screenSize.width * width,
+        itemHeight: 1000,
         itemBuilder: (BuildContext context, int index) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
