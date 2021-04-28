@@ -23,14 +23,49 @@ class MovieHorizontal extends StatelessWidget {
 
     return Container(
       height: _screenSize.height * 0.25,
-      child: PageView(
+      child: PageView.builder(
         pageSnapping: false,
         controller: _pageController,
-        children: _cards(context),
+        // children: _cards(context),
+        itemCount: peliculas.length,
+        itemBuilder: (context, i) => _card(context, peliculas[i]),
       ),
     );
   }
 
+  Widget _card(BuildContext context, Pelicula e) {
+    final _screenSize = MediaQuery.of(context).size;
+
+    return Container(
+      margin: EdgeInsets.only(right: 15.0),
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: FadeInImage(
+              placeholder: AssetImage('assets/img/no-image.jpg'),
+              image: NetworkImage(e.getPosterImg()),
+              fit: BoxFit.cover,
+              height: _screenSize.height * 0.21,
+            ),
+          ),
+          SizedBox(
+            height: _screenSize.height * 0.01,
+          ),
+          Container(
+            height: _screenSize.height * 0.03,
+            child: Text(
+              e.title,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.caption,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  /*
   List<Widget> _cards(BuildContext context) {
     final _screenSize = MediaQuery.of(context).size;
 
@@ -64,4 +99,5 @@ class MovieHorizontal extends StatelessWidget {
       );
     }).toList();
   }
+  */
 }
