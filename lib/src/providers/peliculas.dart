@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
@@ -7,6 +8,24 @@ class PeliculasProvider {
   String _apiKey = '6bd065d775174c013388d12a40c93062';
   String _url = 'api.themoviedb.org';
   String _language = 'es-ES';
+
+  int _popularesPage = 0;
+  bool _cargando = false;
+
+  List<Pelicula> _populares = [];
+
+  final _popularesStreamController =
+      StreamController<List<Pelicula>>.broadcast();
+
+  Function(List<Pelicula>) get popularesSink =>
+      _popularesStreamController.sink.add;
+
+  Stream<List<Pelicula>> get popularesStream =>
+      _popularesStreamController.stream;
+
+  void disposeStreams() {
+    _popularesStreamController?.close();
+  }
 
   Future<List<Pelicula>> _procesarUri(Uri uri) async {
     var response = [];
@@ -37,11 +56,25 @@ class PeliculasProvider {
   }
 
   Future<List<Pelicula>> getPopular() async {
+    if (_cargando) return [];
+
+    _cargando = true;
+
+    _popularesPage++;
+
     final uri = Uri.https(_url, '3/movie/popular', {
       'api_key': _apiKey,
       'language': _language,
+      'page': _popularesPage.toString(),
     });
 
-    return await _procesarUri(uri);
+    final resp = await _procesarUri(uri);
+
+    _populares.addAll(resp);
+    popularesSink(_populares);
+
+    _cargando = false;
+
+    return resp;
   }
 }
