@@ -36,12 +36,14 @@ class MovieHorizontal extends StatelessWidget {
   Widget _card(BuildContext context, Pelicula e) {
     final _screenSize = MediaQuery.of(context).size;
 
+    e.uniqueId = '${e.id}-card';
+
     final card = Container(
       margin: EdgeInsets.only(right: 15.0),
       child: Column(
         children: <Widget>[
           Hero(
-            tag: e.id,
+            tag: e.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: FadeInImage(
