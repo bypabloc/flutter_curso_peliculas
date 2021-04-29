@@ -9,10 +9,10 @@ class CastProvider {
   String _url = 'api.themoviedb.org';
   String _language = 'es-ES';
 
-  int _page = 0;
-  bool _cargando = false;
+  // int _page = 0;
+  // bool _cargando = false;
 
-  List<Cast> _populares = [];
+  // List<Cast> _populares = [];
 
   final _popularesStreamController = StreamController<List<Cast>>.broadcast();
 
