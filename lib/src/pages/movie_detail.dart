@@ -17,9 +17,6 @@ class MovieDetail extends StatelessWidget {
             SizedBox(height: 10.0),
             _posterTitulo(context, pelicula),
             _descripcion(pelicula),
-            _descripcion(pelicula),
-            _descripcion(pelicula),
-            _descripcion(pelicula),
             _createCast(pelicula),
           ]),
         )
@@ -141,7 +138,8 @@ class MovieDetail extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: FadeInImage(
-              placeholder: AssetImage('assets/img/no-avatar.png'),
+              // placeholder: AssetImage('assets/img/no-avatar.png'),
+              placeholder: AssetImage('assets/img/no-image.jpg'),
               image: NetworkImage(actor.getProfilePictureImg()),
               height: 150.0,
               fit: BoxFit.cover,
