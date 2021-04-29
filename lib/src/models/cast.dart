@@ -1,4 +1,19 @@
 class Cast {
+  List<Actor> actores = [];
+
+  Cast();
+
+  Cast.fromJsonList(List<dynamic> jsonList) {
+    if (jsonList == null) return;
+
+    for (var e in jsonList) {
+      final pelicula = Actor.fromJsonMap(e);
+      actores.add(pelicula);
+    }
+  }
+}
+
+class Actor {
   bool adult;
   int gender;
   int id;
@@ -14,7 +29,7 @@ class Cast {
   // Department department;
   String job;
 
-  Cast({
+  Actor({
     this.adult,
     this.gender,
     this.id,
@@ -31,7 +46,7 @@ class Cast {
     this.job,
   });
 
-  Cast.fromJsonMap(Map<String, dynamic> json) {
+  Actor.fromJsonMap(Map<String, dynamic> json) {
     adult = json['adult'];
     gender = json['gender'];
     id = json['id'];
