@@ -24,7 +24,7 @@ class CastProvider {
     _popularesStreamController?.close();
   }
 
-  Future<List<Cast>> _procesarUri(Uri uri) async {
+  Future<List<Actor>> _procesarUri(Uri uri) async {
     var response = [];
     try {
       final resp = await http.get(uri);
@@ -43,7 +43,7 @@ class CastProvider {
     return response;
   }
 
-  Future<List<Cast>> getCast(String movieId) async {
+  Future<List<Actor>> getCast(String movieId) async {
     final uri = Uri.https(_url, '3/movie/$movieId/credits', {
       'api_key': _apiKey,
       'language': _language,

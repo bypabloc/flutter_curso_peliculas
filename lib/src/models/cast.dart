@@ -1,15 +1,13 @@
 class Cast {
   List<Actor> actores = [];
 
-  Cast();
-
   Cast.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) return;
 
-    for (var e in jsonList) {
-      final pelicula = Actor.fromJsonMap(e);
-      actores.add(pelicula);
-    }
+    jsonList.forEach((e) {
+      final actor = Actor.fromJsonMap(e);
+      actores.add(actor);
+    });
   }
 }
 
@@ -17,7 +15,7 @@ class Actor {
   bool adult;
   int gender;
   int id;
-  // Department knownForDepartment;
+  String knownForDepartment;
   String name;
   String originalName;
   double popularity;
@@ -26,14 +24,14 @@ class Actor {
   String character;
   String creditId;
   int order;
-  // Department department;
-  String job;
+  // String department;
+  // String job;
 
   Actor({
     this.adult,
     this.gender,
     this.id,
-    // this.knownForDepartment,
+    this.knownForDepartment,
     this.name,
     this.originalName,
     this.popularity,
@@ -43,14 +41,14 @@ class Actor {
     this.creditId,
     this.order,
     // this.department,
-    this.job,
+    // this.job,
   });
 
   Actor.fromJsonMap(Map<String, dynamic> json) {
     adult = json['adult'];
     gender = json['gender'];
     id = json['id'];
-    // knownForDepartment = json['knownForDepartment'];
+    knownForDepartment = json['known_for_department'];
     name = json['name'];
     originalName = json['original_name'];
     popularity = json['popularity'];
@@ -59,8 +57,6 @@ class Actor {
     character = json['character'];
     creditId = json['credit_id'];
     order = json['order'];
-    // department = json['department'];
-    job = json['job'];
   }
 
   getProfilePictureImg() {
