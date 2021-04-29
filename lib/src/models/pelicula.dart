@@ -16,6 +16,8 @@ class Peliculas {
 }
 
 class Pelicula {
+  String uniqueId = '';
+
   bool adult;
   String backdropPath;
   List<int> genreIds;
@@ -66,10 +68,14 @@ class Pelicula {
   }
 
   getPosterImg() {
-    if (posterPath == null) {
-      return 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
-    } else {
-      return 'https://image.tmdb.org/t/p/w500/$posterPath';
-    }
+    return (posterPath != null)
+        ? 'https://image.tmdb.org/t/p/w500/$posterPath'
+        : '';
+  }
+
+  getbackdropPathImg() {
+    return (backdropPath != null)
+        ? 'https://image.tmdb.org/t/p/w500/$backdropPath'
+        : '';
   }
 }
