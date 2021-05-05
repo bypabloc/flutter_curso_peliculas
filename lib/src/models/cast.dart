@@ -10,18 +10,18 @@ class Cast {
 }
 
 class Actor {
-  bool adult;
-  int gender;
-  int id;
-  String knownForDepartment;
-  String name;
-  String originalName;
-  double popularity;
-  String profilePath;
-  int castId;
-  String character;
-  String creditId;
-  int order;
+  bool? adult;
+  int? gender;
+  int? id;
+  String? knownForDepartment;
+  String? name;
+  String? originalName;
+  double? popularity;
+  String? profilePath;
+  int? castId;
+  String? character;
+  String? creditId;
+  int? order;
   // String department;
   // String job;
 
