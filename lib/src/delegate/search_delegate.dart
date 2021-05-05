@@ -60,23 +60,25 @@ class DataSearch extends SearchDelegate {
           final peliculas = snapshot.data;
 
           return ListView(
-              children: peliculas.map((pelicula) {
-            return ListTile(
-              leading: FadeInImage(
-                image: NetworkImage(pelicula.getPosterImg()),
-                placeholder: AssetImage('assets/img/no-image.jpg'),
-                width: 50.0,
-                fit: BoxFit.contain,
-              ),
-              title: Text(pelicula.title),
-              subtitle: Text(pelicula.originalTitle),
-              onTap: () {
-                close(context, null);
-                pelicula.uniqueId = '';
-                Navigator.pushNamed(context, 'detail', arguments: pelicula);
-              },
-            );
-          }).toList());
+              children: peliculas?.map((pelicula) {
+                    return ListTile(
+                      leading: FadeInImage(
+                        image: NetworkImage(pelicula.getPosterImg()),
+                        placeholder: AssetImage('assets/img/no-image.jpg'),
+                        width: 50.0,
+                        fit: BoxFit.contain,
+                      ),
+                      title: Text(pelicula.title),
+                      subtitle: Text(pelicula.originalTitle),
+                      onTap: () {
+                        close(context, null);
+                        pelicula.uniqueId = '';
+                        Navigator.pushNamed(context, 'detail',
+                            arguments: pelicula);
+                      },
+                    );
+                  }).toList() ??
+                  []);
         } else {
           return Center(child: CircularProgressIndicator());
         }

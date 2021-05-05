@@ -6,8 +6,6 @@ class Peliculas {
   Peliculas();
 
   Peliculas.fromJsonList(List<dynamic> jsonList) {
-    if (jsonList == null) return;
-
     for (var item in jsonList) {
       final pelicula = Pelicula.fromJsonMap(item);
       items.add(pelicula);
